@@ -1,5 +1,5 @@
 test: MarkdownParse.class
-	javac MarkdownParse.java MarkdownParse
+	javac MarkdownParse.java
 	touch test
 
 MarkdownParse.class: MarkdownParse.java
