@@ -46,4 +46,25 @@ public class MarkdownParseTest {
         String contents = Files.readString(fileName);
         assertEquals(List.of(), MarkdownParse.getLinks(contents));
     }
+
+    @Test
+    public void testBreakLab1() throws IOException {
+        Path fileName = Path.of("labbreak1.md");
+        String contents = Files.readString(fileName);
+        assertEquals(List.of("url.com"), MarkdownParse.getLinks(contents));
+    }
+
+    @Test
+    public void testBreakLab2() throws IOException {
+        Path fileName = Path.of("labbreak2.md");
+        String contents = Files.readString(fileName);
+        assertEquals(List.of("b.com"), MarkdownParse.getLinks(contents));
+    }
+
+    @Test
+    public void testBreakLab3() throws IOException {
+        Path fileName = Path.of("labbreak3.md");
+        String contents = Files.readString(fileName);
+        assertEquals(List.of(" https://www.twitter.com ","https://cse.ucsd.edu/"), MarkdownParse.getLinks(contents));
+    }
 }
