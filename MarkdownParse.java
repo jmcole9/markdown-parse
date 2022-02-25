@@ -10,52 +10,27 @@ public class MarkdownParse {
         // find the next [, then find the ], then find the (, then take up to
         // the next )
         int currentIndex = 0;
-
         while(currentIndex < markdown.length()) {
-            // Checks if there are any links at all
-            if(markdown.indexOf("(") == -1) {
-                break;
-            }
-
-            // Flag to keep track of exclamation
-            boolean flag = false;
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
-
-            // For test case 1 (bug with text after paren)
-            if(nextOpenBracket == -1) {
-                break;
-            }
-
+            System.out.format("%d\t%d\t%s\n", currentIndex, nextOpenBracket, toReturn);
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
-
-            // For test case 5 (test-file3)
-            if(closeParen == -1) {
-                break;
+            if(nextOpenBracket == -1 || nextCloseBracket == -1
+                  || closeParen == -1 || openParen == -1) {
+                return toReturn;
             }
-
-            // For test case 2 (bug for paren inside link)
-            if(markdown.charAt(closeParen - 1) == '(') {
-                closeParen = markdown.indexOf(")", closeParen + 1);
+            String potentialLink = markdown.substring(openParen + 1, closeParen);
+            if(potentialLink.indexOf(" ") == -1 && potentialLink.indexOf("\n") == -1) {
+                toReturn.add(potentialLink);
+                currentIndex = closeParen + 1;
             }
-
-            // For test case 3 (bug with image instead of link)
-            if(nextOpenBracket > 0 && markdown.charAt(nextOpenBracket - 1) == '!') {
-                flag = true;
+            else {
+                currentIndex = currentIndex + 1;
             }
-
-            // For both test case 2 and 3
-            if(nextCloseBracket + 1 == openParen && !flag) {
-                toReturn.add(markdown.substring(openParen + 1, closeParen));
-            }
-
-            currentIndex = closeParen + 1;
         }
         return toReturn;
     }
-
-    
     public static void main(String[] args) throws IOException {
 		Path fileName = Path.of(args[0]);
 	    String contents = Files.readString(fileName);
