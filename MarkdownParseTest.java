@@ -49,21 +49,21 @@ public class MarkdownParseTest {
 
     @Test
     public void testBreakLab1() throws IOException {
-        Path fileName = Path.of("labbreak1.md");
+        Path fileName = Path.of("snippet1.md");
         String contents = Files.readString(fileName);
         assertEquals(List.of("`google.com","google.com","ucsd.edu"), MarkdownParse.getLinks(contents));
     }
 
     @Test
     public void testBreakLab2() throws IOException {
-        Path fileName = Path.of("labbreak2.md");
+        Path fileName = Path.of("snippet2.md");
         String contents = Files.readString(fileName);
         assertEquals(List.of("a.com","a.com(())","example.com"), MarkdownParse.getLinks(contents));
     }
 
     @Test
     public void testBreakLab3() throws IOException {
-        Path fileName = Path.of("labbreak3.md");
+        Path fileName = Path.of("snippet3.md");
         String contents = Files.readString(fileName);
         assertEquals(List.of(" https://www.twitter.com ","https://ucsd-cse15l-w22.github.io/","https://cse.ucsd.edu/"), MarkdownParse.getLinks(contents));
     }
